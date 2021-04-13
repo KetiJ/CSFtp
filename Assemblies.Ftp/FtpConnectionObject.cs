@@ -108,6 +108,23 @@ namespace Assemblies.Ftp
 			}
 			else
 			{
+				//---- Added for managing Android terminals connections
+			   	if (sCommand.ToUpper() == "NLST")
+			    	{
+					sValue = sValue.Replace("/", "\\");
+					if (sValue.StartsWith("\\"))
+					{
+				    	if (sValue.Length >= 1)
+						sValue = sValue.Substring(1);
+				    	else
+						sValue = "";
+				}
+				if (sValue.EndsWith("\\"))
+				    	sValue += "*";
+				else if ((sValue.Length > 0) && !sValue.Contains("*"))
+				    sValue += "\\*";
+			    	}			
+				//------------------------------------------------------------
 				await handler.Process(sValue);
 			}
 		}
